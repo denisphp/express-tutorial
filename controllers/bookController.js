@@ -11,7 +11,7 @@ exports.book_list = function(req, res, next) {
         .exec(function (err, listBooks) {
             if (err) return next(err);
 
-            res.render('bookList', {title: 'Book List', data: listBooks})
+            res.render('books/list', {title: 'Book List', data: listBooks})
         })
 };
 

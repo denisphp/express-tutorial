@@ -9,7 +9,7 @@ exports.genre_list = function (req, res) {
                 return next(err);
             }
 
-            res.render('genreList', {title: 'Genre List', data: genreAuthors});
+            res.render('genres/list', {title: 'Genre List', data: genreAuthors});
         })
 };
 

@@ -7,7 +7,7 @@ exports.bookinstance_list = function(req, res, next) {
         .exec(function (err, bookinstances) {
             if (err) { return next(err); }
 
-            res.render('bookinstanceList', { title: 'Book Instance List', data: bookinstances });
+            res.render('bookinstances/list', { title: 'Book Instance List', data: bookinstances });
         });
 
 };

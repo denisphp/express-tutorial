@@ -9,7 +9,7 @@ exports.author_list = function (req, res, next) {
                 return next(err);
             }
 
-            res.render('authorList', {title: 'Author List', data: listAuthors});
+            res.render('authors/list', {title: 'Author List', data: listAuthors});
         })
 };
 
