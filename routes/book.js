@@ -3,6 +3,10 @@ var express = require('express'),
     bookController = require('../controllers/bookController');
 
 
+router.get('/', bookController.bookList);
+
+router.get('/:id', bookController.bookDetail);
+
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get('/create', bookController.book_create_get);
 
@@ -21,10 +25,5 @@ router.get('/:id/update', bookController.book_update_get);
 // POST request to update Book.
 router.post('/:id/update', bookController.book_update_post);
 
-// GET request for one Book.
-router.get('/:id', bookController.book_detail);
-
-// GET request for list of all Book items.
-router.get('/', bookController.book_list);
 
 module.exports = router;
