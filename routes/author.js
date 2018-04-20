@@ -3,6 +3,12 @@ var express = require('express'),
     authorController = require('../controllers/authorController');
 
 
+// GET request for list of all Authors.
+router.get('/', authorController.authorList);
+
+// GET request for one Author.
+router.get('/:id', authorController.authorDetail);
+
 // GET request for creating Author. NOTE This must come before route for id (i.e. display author).
 router.get('/create', authorController.author_create_get);
 
@@ -20,12 +26,6 @@ router.get('/:id/update', authorController.author_update_get);
 
 // POST request to update Author.
 router.post('/:id/update', authorController.author_update_post);
-
-// GET request for one Author.
-router.get('/:id', authorController.author_detail);
-
-// GET request for list of all Authors.
-router.get('/', authorController.author_list);
 
 
 module.exports = router;

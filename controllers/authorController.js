@@ -1,7 +1,8 @@
-var Author = require('../models/author');
+var Author = require('../models/author'),
+    Book = require('../models/book'),
+    async = require('async');
 
-// Display list of all Authors.
-exports.author_list = function (req, res, next) {
+exports.authorList = function (req, res, next) {
     Author.find()
         .sort([['family_name', 'ascending']])
         .exec(function (err, listAuthors) {
@@ -9,13 +10,38 @@ exports.author_list = function (req, res, next) {
                 return next(err);
             }
 
-            res.render('authors/list', {title: 'Author List', data: listAuthors});
+            res.render('authors/list', {
+                title: 'Author List',
+                data: listAuthors
+            });
         })
 };
 
-// Display detail page for a specific Author.
-exports.author_detail = function (req, res) {
-    res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
+
+exports.authorDetail = function (req, res, next) {
+    async.parallel({
+        author: function (callback) {
+            Author.findById(req.params.id)
+                .exec(callback)
+        },
+        authorsBooks: function (callback) {
+            Book.find({'author': req.params.id}, 'title summary')
+                .exec(callback)
+        },
+    }, function (err, results) {
+        if (err || results.author == null) {
+            var err = new Error('Author not found');
+            err.status = 404;
+            return next(err);
+        }
+
+        res.render('authors/view', {
+            title: 'Author Detail',
+            author: results.author,
+            authorBooks: results.authorsBooks
+        });
+    });
+
 };
 
 // Display Author create form on GET.
