@@ -17,10 +17,10 @@ router.get('/:id', authorController.authorDetail);
 router.post('/create', authorController.authorCreatePost);
 
 // GET request to delete Author.
-router.get('/:id/delete', authorController.author_delete_get);
+router.get('/:id/delete', authorController.authorDeleteGet);
 
 // POST request to delete Author.
-router.post('/:id/delete', authorController.author_delete_post);
+router.post('/:id/delete', authorController.authorDeletePost);
 
 // GET request to update Author.
 router.get('/:id/update', authorController.author_update_get);
