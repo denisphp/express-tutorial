@@ -4,7 +4,7 @@ var express = require('express'),
 
 
 // GET request for creating Author. NOTE This must come before route for id (i.e. display author).
-router.get('/create', authorController.author_create_get);
+router.get('/create', authorController.authorCreateGet);
 
 // GET request for list of all Authors.
 router.get('/', authorController.authorList);
@@ -14,7 +14,7 @@ router.get('/:id', authorController.authorDetail);
 
 
 // POST request for creating Author.
-router.post('/create', authorController.author_create_post);
+router.post('/create', authorController.authorCreatePost);
 
 // GET request to delete Author.
 router.get('/:id/delete', authorController.author_delete_get);

@@ -1,5 +1,4 @@
-const {body, validationResult} = require('express-validator/check');
-const {sanitizeBody} = require('express-validator/filter');
+const {check, validationResult} = require('express-validator/check');
 
 var Genre = require('../models/genre'),
     Book = require('../models/book'),
@@ -52,56 +51,45 @@ exports.genreCreateGet = function (req, res) {
 
 // Handle Genre create on POST.
 exports.genreCreatePost = [
-    // Validate that the name field is not empty.
-    body('name', 'Genre name required').isLength({min: 1}).trim(),
+    check('name')
+        .isLength({min: 3})
+        .trim()
+        .escape()
+        .withMessage('Genre name required and must be min 3 characters.'),
 
-    // Sanitize (trim and escape) the name field.
-    sanitizeBody('name').trim().escape(),
+    check('name')
+        .custom((value, {req}) => {
+            return new Promise((resolve, reject) => {
+                Genre.findOne({'name': value}, (err, genre) => {
+                    if (genre !== null) {
+                        return reject();
+                    } else {
+                        return resolve();
+                    }
+                });
+            })
+        })
+        .withMessage('Genre already in use'),
 
-    // Process request after validation and sanitization.
+
     (req, res, next) => {
-
-        // Extract the validation errors from a request.
         const errors = validationResult(req);
-
-        // Create a genre object with escaped and trimmed data.
-        var genre = new Genre(
-            {name: req.body.name}
-        );
-
+        var genre = new Genre({name: req.body.name});
 
         if (!errors.isEmpty()) {
-            // There are errors. Render the form again with sanitized values/error messages.
-            res.render('genres/createForm', {title: 'Create Genre', genre: genre, errors: errors.array()});
+            res.render('genres/createForm', {title: 'Create Genre', errors: errors.array(), genre: genre});
             return;
         }
-        else {
-            // Data from form is valid.
-            // Check if Genre with same name already exists.
-            Genre.findOne({'name': req.body.name})
-                .exec(function (err, found_genre) {
-                    if (err) {
-                        return next(err);
-                    }
 
-                    if (found_genre) {
-                        // Genre exists, redirect to its detail page.
-                        res.redirect(found_genre.url);
-                    }
-                    else {
 
-                        genre.save(function (err) {
-                            if (err) {
-                                return next(err);
-                            }
-                            // Genre saved. Redirect to genre detail page.
-                            res.redirect(genre.url);
-                        });
+        genre.save(function (err) {
+            if (err) {
+                return next(err);
+            }
 
-                    }
+            res.redirect(genre.url);
+        });
 
-                });
-        }
     }
 ];
 

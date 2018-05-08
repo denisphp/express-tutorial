@@ -4,7 +4,7 @@ var express = require('express'),
 
 
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
-router.get('/create', bookController.book_create_get);
+router.get('/create', bookController.bookСreateGet);
 
 router.get('/', bookController.bookList);
 
@@ -13,7 +13,7 @@ router.get('/:id', bookController.bookDetail);
 
 
 // POST request for creating Book.
-router.post('/create', bookController.book_create_post);
+router.post('/create', bookController.bookCreatePost);
 
 // GET request to delete Book.
 router.get('/:id/delete', bookController.book_delete_get);
