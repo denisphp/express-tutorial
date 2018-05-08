@@ -2,9 +2,14 @@ var express = require('express'),
     router = express.Router(),
     genreController = require('../controllers/genreController');
 
+router.get('/create', genreController.genreCreateGet);
 
-// GET request for creating a Genre. NOTE This must come before route that displays Genre (uses id).
-router.get('/create', genreController.genre_create_get);
+// GET request for one Genre.
+router.get('/:id', genreController.genreDetail);
+
+// GET request for list of all Genre.
+router.get('/', genreController.genreList);
+
 
 //POST request for creating Genre.
 router.post('/create', genreController.genre_create_post);
@@ -21,11 +26,6 @@ router.get('/:id/update', genreController.genre_update_get);
 // POST request to update Genre.
 router.post('/:id/update', genreController.genre_update_post);
 
-// GET request for one Genre.
-router.get('/:id', genreController.genre_detail);
-
-// GET request for list of all Genre.
-router.get('/', genreController.genre_list);
 
 
 module.exports = router;

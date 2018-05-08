@@ -1,9 +1,12 @@
+const { body, validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
 var Genre = require('../models/genre'),
     Book = require('../models/book'),
     async = require('async');
 
 
-exports.genre_list = function (req, res) {
+exports.genreList = function (req, res, next) {
     Genre.find()
         .sort([['name', 'ascending']])
         .exec(function (err, genreAuthors) {
@@ -16,7 +19,7 @@ exports.genre_list = function (req, res) {
 };
 
 // Display detail page for a specific Genre.
-exports.genre_detail = function (req, res) {
+exports.genreDetail = function (req, res, next) {
     async.parallel({
         genre: function (callback) {
             Genre.findById(req.params.id)
@@ -43,8 +46,8 @@ exports.genre_detail = function (req, res) {
 };
 
 // Display Genre create form on GET.
-exports.genre_create_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: Genre create GET');
+exports.genreCreateGet = function (req, res) {
+    res.render('genres/createForm', {title: 'Create Genre'})
 };
 
 // Handle Genre create on POST.

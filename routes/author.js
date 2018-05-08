@@ -3,14 +3,15 @@ var express = require('express'),
     authorController = require('../controllers/authorController');
 
 
+// GET request for creating Author. NOTE This must come before route for id (i.e. display author).
+router.get('/create', authorController.author_create_get);
+
 // GET request for list of all Authors.
 router.get('/', authorController.authorList);
 
 // GET request for one Author.
 router.get('/:id', authorController.authorDetail);
 
-// GET request for creating Author. NOTE This must come before route for id (i.e. display author).
-router.get('/create', authorController.author_create_get);
 
 // POST request for creating Author.
 router.post('/create', authorController.author_create_post);

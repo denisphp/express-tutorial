@@ -5,10 +5,11 @@ var express = require('express'),
 
 router.get('/', bookinstanceController.bookinstanceList);
 
-router.get('/:id', bookinstanceController.bookinstanceDetail);
-
 // GET request for creating a BookInstance. NOTE This must come before route that displays BookInstance (uses id).
 router.get('/create', bookinstanceController.bookinstance_create_get);
+
+router.get('/:id', bookinstanceController.bookinstanceDetail);
+
 
 // POST request for creating BookInstance.
 router.post('/create', bookinstanceController.bookinstance_create_post);
