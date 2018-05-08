@@ -3,6 +3,10 @@ var express = require('express'),
     bookinstanceController = require('../controllers/bookinstanceController');
 
 
+router.get('/', bookinstanceController.bookinstanceList);
+
+router.get('/:id', bookinstanceController.bookinstanceDetail);
+
 // GET request for creating a BookInstance. NOTE This must come before route that displays BookInstance (uses id).
 router.get('/create', bookinstanceController.bookinstance_create_get);
 
@@ -21,10 +25,5 @@ router.get('/:id/update', bookinstanceController.bookinstance_update_get);
 // POST request to update BookInstance.
 router.post('/:id/update', bookinstanceController.bookinstance_update_post);
 
-// GET request for one BookInstance.
-router.get('/:id', bookinstanceController.bookinstance_detail);
-
-// GET request for list of all BookInstance.
-router.get('/', bookinstanceController.bookinstance_list);
 
 module.exports = router;
