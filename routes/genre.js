@@ -12,7 +12,7 @@ router.get('/', genreController.genreList);
 
 
 //POST request for creating Genre.
-router.post('/create', genreController.genre_create_post);
+router.post('/create', genreController.genreCreatePost);
 
 // GET request to delete Genre.
 router.get('/:id/delete', genreController.genre_delete_get);
